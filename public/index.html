@@ -11,8 +11,9 @@
   <canvas id="canvas"></canvas>
   <script src="viewer.js"></script>
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    initViewer(fileName);
+  const urlParams = new URLSearchParams(window.location.search);
+  const fileName = urlParams.get('file') || 'default.splat';
+  initViewer(fileName);
   </script>
 </body>
 </html>
