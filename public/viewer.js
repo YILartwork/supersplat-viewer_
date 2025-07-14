@@ -1,32 +1,25 @@
-const shaderDefinition = {
-  attributes: {
-    aPosition: pc.SEMANTIC_POSITION,
-    aColor: pc.SEMANTIC_COLOR
-  },
+async function initViewer(splatFile) {
+  const response = await fetch(splatFile);
+  const arrayBuffer = await response.arrayBuffer();
+  const parsed = parseSplat(arrayBuffer);
 
-  vshader: `
-    attribute vec3 aPosition;
-    attribute vec3 aColor;
-    varying vec3 vColor;
+  // ✔️ PlayCanvas 앱 초기화
+  const app = new pc.Application(canvas, {});
 
-    void main(void) {
-      vColor = aColor;
-      // Gaussian Splat 크기 처리 (간단 버전)
-      gl_Position = vec4(aPosition, 1.0);
-      gl_PointSize = 8.0; // 임시값, 실제는 covariance 기반
-    }
-  `,
+  // ✔️ VertexBuffer 등으로 데이터 올리기
+  const vertexBuffer = ... // parsed 데이터로 생성
 
-  fshader: `
-    precision mediump float;
-    varying vec3 vColor;
+  // ✔️ Material 생성
+  const material = new pc.ShaderMaterial();
+  material.shader = app.graphicsDevice.createShaderFromDefinition(shaderDefinition);
 
-    void main(void) {
-      // 간단한 원형 점 스플랫
-      vec2 coord = gl_PointCoord - vec2(0.5);
-      if (length(coord) > 0.5) discard;
+  // ✔️ MeshInstance 만들기
+  const meshInstance = new pc.MeshInstance(mesh, material);
 
-      gl_FragColor = vec4(vColor, 1.0);
-    }
-  `
-};
+  // ✔️ 엔티티로 등록
+  // ...
+
+  // ✔️ 씬에 추가
+  app.root.addChild(...);
+  app.start();
+}
