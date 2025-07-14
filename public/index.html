@@ -9,11 +9,12 @@
 </head>
 <body>
   <canvas id="canvas"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/playcanvas@latest/build/playcanvas.js"></script>
   <script src="viewer.js"></script>
   <script>
-  const urlParams = new URLSearchParams(window.location.search);
-  const fileName = urlParams.get('file') || 'default.splat';
-  initViewer(fileName);
+    const urlParams = new URLSearchParams(window.location.search);
+    const fileName = urlParams.get('file') || 'your_default.splat';
+    initViewer(fileName);
   </script>
 </body>
 </html>
